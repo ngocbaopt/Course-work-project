@@ -5,12 +5,15 @@ package edu.mum.cs544.eaproject.domain;
 
 import java.util.Date;
 
+import javax.annotation.Generated;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.GenerationTime;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -38,7 +41,7 @@ public class User {
 	private String email;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date createDate;
+	private Date createDate = new Date();
 
 	/**
 	 * @return the id
@@ -109,6 +112,5 @@ public class User {
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
-	
-	
+
 }
