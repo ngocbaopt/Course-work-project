@@ -4,11 +4,13 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import edu.mum.cs544.eaproject.domain.User;
+import edu.mum.cs544.eaproject.domain.Role;
+import edu.mum.cs544.eaproject.domain.Users;
 import edu.mum.cs544.eaproject.service.UserService;
 
 /**
@@ -20,6 +22,10 @@ public class BlogController {
 	@Autowired
 	private UserService userService;
 
+	public BlogController() {
+		System.out.println("Constructor BlogController");
+	}
+	
 	@RequestMapping(value = "/")
 	public String redirectRoot() {
 		return "redirect:/login";
@@ -31,10 +37,12 @@ public class BlogController {
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String addUser(@Valid User user, BindingResult result) {
+	public String addUser(@Valid Users user, BindingResult result) {
 		String view = "redirect:/login";
 		if (!result.hasErrors()) {
-			userService.saveUser(user);
+			Role role = new Role("ROLE_USER");
+			role.grantUser(user);
+			userService.saveUserAndRole(role);
 		}
 		else {
 			view="register";
@@ -50,5 +58,12 @@ public class BlogController {
 	@RequestMapping(value="/main", method=RequestMethod.GET)
 	public String main() {
 		return "main";
+	}
+	
+	@RequestMapping(value = "/loginfailed", method = RequestMethod.GET)
+	public String loginerror(ModelMap model) {
+		model.addAttribute("error", true);
+		return "login";
+
 	}
 }

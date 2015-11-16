@@ -3,17 +3,16 @@
  */
 package edu.mum.cs544.eaproject.domain;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-import javax.annotation.Generated;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.PrePersist;
+import javax.persistence.ManyToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.hibernate.annotations.GenerationTime;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -25,38 +24,37 @@ import org.hibernate.validator.constraints.NotEmpty;
  */
 
 @Entity
-public class User {
+public class Users {
 
 	@Id
-	@GeneratedValue
-	private int id;
-	
-	@NotEmpty
 	private String username;
 	
 	@NotEmpty
 	private String password;
 	
+	private boolean enabled = true;
+	
 	@Email
 	private String email;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date createDate = new Date();
-
-	/**
-	 * @return the id
-	 */
-	public int getId() {
-		return id;
+	private Date createdDate = new Date();
+	
+	@ManyToMany(mappedBy="users")
+	private List<Role> roles = new ArrayList<Role>();
+	
+	public Users() {
+		
 	}
-
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(int id) {
-		this.id = id;
+	
+	public Users(String username, String password, String email) {
+		this.username = username;
+		this.password = password;
+		this.email = email;
+		this.enabled = true;
+		this.createdDate = new Date();
 	}
-
+	
 	/**
 	 * @return the username
 	 */
@@ -86,6 +84,20 @@ public class User {
 	}
 
 	/**
+	 * @return the enabled
+	 */
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	/**
+	 * @param enabled the enabled to set
+	 */
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	/**
 	 * @return the email
 	 */
 	public String getEmail() {
@@ -100,17 +112,33 @@ public class User {
 	}
 
 	/**
-	 * @return the createDate
+	 * @return the createdDate
 	 */
-	public Date getCreateDate() {
-		return createDate;
+	public Date getCreatedDate() {
+		return createdDate;
 	}
 
 	/**
-	 * @param createDate the createDate to set
+	 * @param createdDate the createdDate to set
 	 */
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
 	}
 
+	/**
+	 * @return the roles
+	 */
+	public List<Role> getRoles() {
+		return roles;
+	}
+
+	/**
+	 * @param roles the roles to set
+	 */
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
+	}
+
+
+	
 }

@@ -6,6 +6,8 @@ import java.lang.reflect.Type;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import edu.mum.cs544.eaproject.dao.BaseDao;
 
@@ -25,17 +27,22 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
 	
 	public void save(T t) {
 		sessionFactory.getCurrentSession().save(t);
+		sessionFactory.getCurrentSession().flush();
 	}
 
 	public void update(T t) {
 		sessionFactory.getCurrentSession().saveOrUpdate(t);
+		sessionFactory.getCurrentSession().flush();
 	}
 
+	@SuppressWarnings("unchecked")
 	public void delete(int id) {
 		Session session = sessionFactory.getCurrentSession();
 		session.delete((T) session.load(type, id));
+		sessionFactory.getCurrentSession().flush();
 	}
 
+	@SuppressWarnings("unchecked")
 	public T get(int id) {
 		return (T) sessionFactory.getCurrentSession().get(type, id);
 	}

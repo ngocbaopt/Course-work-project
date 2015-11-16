@@ -22,7 +22,7 @@
 				<td><input type="text" name="password" /></td>
 				<td><form:errors path="password" cssClass="error"/></td>
 			</tr>
-			<tr>
+ 			<tr>
 				<td>Email: </td>
 				<td><input type="text" name="email" /></td>
 				<td><form:errors path="email" cssClass="error"/></td>

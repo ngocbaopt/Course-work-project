@@ -1,11 +1,14 @@
 package edu.mum.cs544.eaproject.service;
 
-import edu.mum.cs544.eaproject.domain.User;
+import edu.mum.cs544.eaproject.domain.Role;
+import edu.mum.cs544.eaproject.domain.Users;
 
 public interface UserService {
 	
-	void saveUser(User user);
+	void saveUser(Users user);
 	
-	User getUser(int id);
+	Users getUser(int id);
+	
+	void saveUserAndRole(Role role);
 	
 }
