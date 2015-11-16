@@ -1,5 +1,9 @@
 package edu.mum.cs544.eaproject.dao.impl;
 
+/**
+ * @author baopham
+ */
+
 import java.util.List;
 
 import org.hibernate.Query;

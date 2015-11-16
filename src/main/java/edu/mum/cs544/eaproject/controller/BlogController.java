@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import edu.mum.cs544.eaproject.domain.Role;
 import edu.mum.cs544.eaproject.domain.Users;
 import edu.mum.cs544.eaproject.service.UserService;
-import edu.mum.cs544.eaproject.utils.Utils;
+import edu.mum.cs544.eaproject.util.Utils;
 
 /**
+ * @author baopham
  * Handles requests for the application home page.
  */
+
 @Controller
 public class BlogController {
 

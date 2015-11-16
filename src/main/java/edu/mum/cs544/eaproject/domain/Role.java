@@ -1,6 +1,4 @@
-/**
- * 
- */
+
 package edu.mum.cs544.eaproject.domain;
 
 import java.util.ArrayList;

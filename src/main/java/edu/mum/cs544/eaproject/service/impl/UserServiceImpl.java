@@ -8,7 +8,7 @@ import edu.mum.cs544.eaproject.dao.UserDao;
 import edu.mum.cs544.eaproject.domain.Role;
 import edu.mum.cs544.eaproject.domain.Users;
 import edu.mum.cs544.eaproject.service.UserService;
-import edu.mum.cs544.eaproject.utils.Utils;
+import edu.mum.cs544.eaproject.util.Utils;
 
 @Transactional
 @Service("userService")

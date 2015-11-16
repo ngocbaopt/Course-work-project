@@ -1,4 +1,4 @@
-package edu.mum.cs544.eaproject.utils;
+package edu.mum.cs544.eaproject.util;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
