@@ -9,6 +9,8 @@ public interface UserService {
 	
 	Users getUser(int id);
 	
-	void saveUserAndRole(Role role);
+	void saveRole(Role role);
+	
+	Role getRole(String role);
 	
 }

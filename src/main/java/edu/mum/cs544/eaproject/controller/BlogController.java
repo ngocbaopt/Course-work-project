@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import edu.mum.cs544.eaproject.domain.Role;
 import edu.mum.cs544.eaproject.domain.Users;
 import edu.mum.cs544.eaproject.service.UserService;
+import edu.mum.cs544.eaproject.utils.Utils;
 
 /**
  * Handles requests for the application home page.
@@ -40,9 +41,10 @@ public class BlogController {
 	public String addUser(@Valid Users user, BindingResult result) {
 		String view = "redirect:/login";
 		if (!result.hasErrors()) {
-			Role role = new Role("ROLE_USER");
-			role.grantUser(user);
-			userService.saveUserAndRole(role);
+			Users encodedUser = Utils.encodePassword(user);
+			Role role = userService.getRole("ROLE_USER");
+			role.grantUser(encodedUser);
+			userService.saveRole(role);
 		}
 		else {
 			view="register";

@@ -17,7 +17,7 @@ import javax.persistence.ManyToMany;
  * @author baopham
  *
  */
-@Entity()
+@Entity
 public class Role {
 
 	@Id
@@ -26,7 +26,7 @@ public class Role {
 	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name = "authorities", joinColumns = { @JoinColumn(name = "authority") }, inverseJoinColumns = {
 	@JoinColumn(name = "username") })
-	private List<Users> users = new ArrayList();
+	private List<Users> users = new ArrayList<Users>();
 
 	public Role() {
 	}

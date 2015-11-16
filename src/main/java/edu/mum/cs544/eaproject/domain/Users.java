@@ -15,6 +15,8 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 
 
@@ -138,7 +140,5 @@ public class Users {
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
 	}
-
-
 	
 }

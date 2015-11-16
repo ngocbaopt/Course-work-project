@@ -2,13 +2,13 @@ package edu.mum.cs544.eaproject.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import edu.mum.cs544.eaproject.dao.UserDao;
 import edu.mum.cs544.eaproject.domain.Role;
 import edu.mum.cs544.eaproject.domain.Users;
 import edu.mum.cs544.eaproject.service.UserService;
+import edu.mum.cs544.eaproject.utils.Utils;
 
 @Transactional
 @Service("userService")
@@ -24,7 +24,8 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void saveUser(Users user) {
 		// TODO Auto-generated method stub
-		userDao.save(user);
+		Users encodedUser = Utils.encodePassword(user);
+		userDao.save(encodedUser);
 	}
 
 	@Override
@@ -34,9 +35,15 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void saveUserAndRole(Role role) {
+	public void saveRole(Role role) {
 		// TODO Auto-generated method stub
-		userDao.saveUserAndRole(role);
+		userDao.saveRole(role);
+	}
+
+	@Override
+	public Role getRole(String role) {
+		// TODO Auto-generated method stub
+		return userDao.getRole(role);
 	}
 	
 }

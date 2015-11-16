@@ -32,9 +32,13 @@
 	</sec:http>
 	<sec:authentication-manager>
 		<sec:authentication-provider>
+			<sec:password-encoder ref="encoder"></sec:password-encoder>
 			<sec:jdbc-user-service data-source-ref="dataSource" />
 		</sec:authentication-provider>
 	</sec:authentication-manager>
+
+	<bean id="encoder"
+		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
 
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
@@ -63,8 +67,8 @@
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
 				<prop key="connection.pool.size">1</prop>
 				<prop key="hibernate.show_sql">true</prop>
-				<!-- <prop key="hibernate.hbm2ddl.import_files">populate.sql</prop> -->
-				<prop key="org.hibernate.flushMode">COMMIT</prop>
+				<prop key="hibernate.hbm2ddl.import_files">populate.sql</prop>
+				<!-- <prop key="org.hibernate.flushMode">COMMIT</prop> -->
 			</props>
 		</property>
 	</bean>

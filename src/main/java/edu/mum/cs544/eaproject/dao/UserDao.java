@@ -5,5 +5,7 @@ import edu.mum.cs544.eaproject.domain.Users;
 
 public interface UserDao extends BaseDao<Users>{
 
-	void saveUserAndRole(Role role);
+	void saveRole(Role role);
+	
+	Role getRole(String role);
 }
