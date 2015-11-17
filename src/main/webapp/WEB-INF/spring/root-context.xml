@@ -12,7 +12,7 @@
 	http://www.springframework.org/schema/security
 	http://www.springframework.org/schema/security/spring-security-3.2.xsd">
 
-	<sec:http pattern="/WEB-INF/views/login.jsp" security="none" />
+	<sec:http pattern="/login" security="none" /> 
 	<!-- Root Context: defines shared resources visible to all other web components -->
 
 	<bean id="webexpressionHandler"
@@ -28,7 +28,7 @@
 		<sec:intercept-url pattern="/**" access="ROLE_USER,ROLE_ADMIN" />
 		<sec:form-login login-page="/login"
 			authentication-failure-url="/loginfailed" default-target-url="/main" />
-		<sec:logout logout-success-url="/index.jsp" />
+		<sec:logout logout-success-url="/login" />
 	</sec:http>
 	<sec:authentication-manager>
 		<sec:authentication-provider>
@@ -38,7 +38,7 @@
 	</sec:authentication-manager>
 
 	<bean id="encoder"
-		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
@@ -79,4 +79,5 @@
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
+
 </beans> 

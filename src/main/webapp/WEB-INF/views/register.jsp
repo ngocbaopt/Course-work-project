@@ -9,7 +9,7 @@
 </head>
 <body>
 	<h1>Please register new account!</h1>
-	<form:form commandName="user" action="register" method="post">
+	<form:form commandName="users" action="register" method="post">
 		<form:errors path="*" cssClass="errorBlock" element="div"></form:errors>
 		<table>
 			<tr>

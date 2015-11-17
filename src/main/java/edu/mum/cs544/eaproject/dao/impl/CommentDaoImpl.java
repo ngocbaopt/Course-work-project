@@ -17,10 +17,10 @@ import edu.mum.cs544.eaproject.domain.Comment;
 @Transactional
 public class CommentDaoImpl extends BaseDaoImpl<Comment> implements CommentDao {
 
+	@SuppressWarnings("unchecked")
 	public List<Comment> getCommentsByTrip(int id) {
 		Query query = sessionFactory.getCurrentSession().createQuery("from Comment where tripId = :tripId");
 		query.setInteger("tripId", id);
-		@SuppressWarnings("unchecked")
 		List<Comment> comments = query.list();
 		return comments;
 	}

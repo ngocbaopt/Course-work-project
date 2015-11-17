@@ -1,5 +1,7 @@
 package edu.mum.cs544.eaproject.service.impl;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,9 +31,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Users getUser(int id) {
+	public Users getUser(String username) {
 		// TODO Auto-generated method stub
-		return userDao.get(id);
+		return userDao.getUser(username);
 	}
 
 	@Override

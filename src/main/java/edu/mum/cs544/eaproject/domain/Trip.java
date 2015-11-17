@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -13,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 /**
  * 
@@ -28,6 +31,7 @@ public class Trip {
 	private int id;
 	
 	@Lob
+	@NotBlank
 	private String tripText;
 	
 	@Temporal(value = TemporalType.TIMESTAMP)
@@ -37,9 +41,11 @@ public class Trip {
 	@JoinColumn(name="username")
 	private Users user;
 	
-	@OneToMany
+	@OneToMany(cascade=CascadeType.ALL)
 	@JoinColumn(name="tripId")
 	private List<Comment> comments = new ArrayList<Comment>();
+	
+	private boolean editable = false;
 	
 	public Trip() {
 		
@@ -120,6 +126,27 @@ public class Trip {
 		this.comments = comments;
 	}
 	
+	public void addComment(Comment comment) {
+		this.comments.add(comment);
+	}
+	
+	public void removeComment(Comment comment) {
+		this.comments.remove(comment);
+	}
+
+	/**
+	 * @return the editable
+	 */
+	public boolean isEditable() {
+		return editable;
+	}
+
+	/**
+	 * @param editable the editable to set
+	 */
+	public void setEditable(boolean editable) {
+		this.editable = editable;
+	}
 	
 	
 }

@@ -48,9 +48,9 @@ public class TripServiceimpl implements TripService {
 	}
 
 	@Override
-	public void deleteTrip(Trip trip) {
+	public void deleteTrip(int id) {
 		// TODO Auto-generated method stub
-		tripDao.delete(trip.getId());
+		tripDao.delete(id);
 	}
 
 	@Override

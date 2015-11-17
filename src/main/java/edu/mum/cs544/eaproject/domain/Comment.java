@@ -12,6 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 /**
  * @author baopham
  */
@@ -24,7 +26,8 @@ public class Comment {
 	private int id;
 	
 	@Lob
-	private String comment;
+	@NotBlank
+	private String commentText;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createDate = new Date();
@@ -38,7 +41,7 @@ public class Comment {
 	}
 	
 	public Comment(String comment, Users user) {
-		this.comment = comment;
+		this.commentText = comment;
 		this.user = user;
 	}
 
@@ -56,19 +59,6 @@ public class Comment {
 		this.id = id;
 	}
 
-	/**
-	 * @return the comment
-	 */
-	public String getComment() {
-		return comment;
-	}
-
-	/**
-	 * @param comment the comment to set
-	 */
-	public void setComment(String comment) {
-		this.comment = comment;
-	}
 
 	/**
 	 * @return the createDate
@@ -96,6 +86,21 @@ public class Comment {
 	 */
 	public void setUser(Users user) {
 		this.user = user;
+	}
+
+
+	/**
+	 * @return the commentText
+	 */
+	public String getCommentText() {
+		return commentText;
+	}
+
+	/**
+	 * @param commentText the commentText to set
+	 */
+	public void setCommentText(String commentText) {
+		this.commentText = commentText;
 	}
 	
 	

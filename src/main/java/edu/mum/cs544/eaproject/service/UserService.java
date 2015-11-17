@@ -11,7 +11,7 @@ public interface UserService {
 	
 	void saveUser(Users user);
 	
-	Users getUser(int id);
+	Users getUser(String username);
 	
 	void saveRole(Role role);
 	

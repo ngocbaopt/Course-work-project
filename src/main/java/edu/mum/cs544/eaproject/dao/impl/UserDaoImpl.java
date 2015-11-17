@@ -38,4 +38,10 @@ public class UserDaoImpl extends BaseDaoImpl<Users> implements UserDao {
 		List<Role> roles = query.list();
 		return roles.get(0);
 	}
+
+	@Override
+	public Users getUser(String user) {
+		// TODO Auto-generated method stub
+		return (Users) sessionFactory.getCurrentSession().get(Users.class, user);
+	}
 }

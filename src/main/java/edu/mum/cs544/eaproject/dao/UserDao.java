@@ -12,4 +12,6 @@ public interface UserDao extends BaseDao<Users>{
 	void saveRole(Role role);
 	
 	Role getRole(String role);
+	
+	Users getUser(String user);
 }

@@ -14,9 +14,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 
 
@@ -29,6 +28,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class Users {
 
 	@Id
+	@NotEmpty
 	private String username;
 	
 	@NotEmpty
@@ -37,6 +37,7 @@ public class Users {
 	private boolean enabled = true;
 	
 	@Email
+	@NotEmpty
 	private String email;
 	
 	@Temporal(TemporalType.TIMESTAMP)
