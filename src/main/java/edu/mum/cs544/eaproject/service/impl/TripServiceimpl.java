@@ -10,8 +10,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import edu.mum.cs544.eaproject.dao.CommentDao;
+import edu.mum.cs544.eaproject.dao.FavoriteDao;
 import edu.mum.cs544.eaproject.dao.TripDao;
 import edu.mum.cs544.eaproject.domain.Comment;
+import edu.mum.cs544.eaproject.domain.Favorite;
 import edu.mum.cs544.eaproject.domain.Trip;
 import edu.mum.cs544.eaproject.service.TripService;
 
@@ -29,6 +31,9 @@ public class TripServiceimpl implements TripService {
 
 	@Autowired
 	private CommentDao commentDao;
+	
+	@Autowired
+	private FavoriteDao favoriteDao;
 
 	@Override
 	public List<Trip> getAllTrips() {
@@ -72,15 +77,39 @@ public class TripServiceimpl implements TripService {
 	}
 
 	@Override
-	public void deleteComment(Comment comment) {
+	public void deleteComment(int id) {
 		// TODO Auto-generated method stub
-		commentDao.delete(comment.getId());
+		commentDao.delete(id);
 	}
 
 	@Override
 	public Comment getComment(int id) {
 		// TODO Auto-generated method stub
 		return commentDao.get(id);
+	}
+
+	@Override
+	public void updateComment(Comment comment) {
+		// TODO Auto-generated method stub
+		commentDao.update(comment);
+	}
+
+	@Override
+	public void addFavorite(Favorite favorite) {
+		// TODO Auto-generated method stub
+		favoriteDao.save(favorite);
+	}
+
+	@Override
+	public void deleteFavorite(int id) {
+		// TODO Auto-generated method stub
+		favoriteDao.delete(id);
+	}
+
+	@Override
+	public Favorite getFavorite(int tripId, String username) {
+		// TODO Auto-generated method stub
+		return favoriteDao.getFavorite(tripId, username);
 	}
 
 }

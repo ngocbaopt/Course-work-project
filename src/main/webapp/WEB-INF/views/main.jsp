@@ -11,12 +11,12 @@
 </head>
 <body>
 	<div>
-		<a href="login""><img alt="Logout"
+		<a href="login"><img alt="Logout"
 			src="<c:url value="/resources/images/logout.png"/>" /></a> <a
-			href="register""><img alt="Register"
+			href="register"><img alt="Register"
 			src="<c:url value="/resources/images/register.png"/>" /></a>
 	</div>
-	<h1>Welcome to Blog Post Site</h1>
+	<h1>Welcome ${currentUsername}</h1>
 	<form:form commandName="trip" action="addTrip" method="post">
 		<form:errors path="*" cssClass="errorBlock" element="div"></form:errors>
 		<table>
@@ -32,7 +32,7 @@
 		<div>
 
 			<p>
-				<img alt="Like" src="<c:url value="/resources/images/user.png"/>" />
+				<img alt="User" src="<c:url value="/resources/images/user.png"/>" />
 				${trip.user.username}
 				<fmt:formatDate value="${trip.createDate}" pattern="yyyy-MMM-dd" />
 			</p>
@@ -46,24 +46,48 @@
 				</c:when>
 				<c:otherwise>
 					<label>${trip.tripText }</label>
-					<img alt="Like" src="<c:url value="/resources/images/like.png"/>" />
-					<a href="trip/${trip.id }"><img alt="Edit"
-						src="<c:url value="/resources/images/edit.png"/>" /></a>
-					<a href="deleteTrip/${trip.id}"><img alt="Delete"
-						src="<c:url value="/resources/images/delete.png"/>" /></a>
+					<a href="addFavorite/${trip.id}/${currentUsername}">
+						<img alt="Like" src="<c:url value="/resources/images/like.png"/>" />
+					</a>
+					<c:if test="${trip.user.username eq currentUsername }">
+						<a href="trip/${trip.id }"><img alt="Edit"
+							src="<c:url value="/resources/images/edit.png"/>" /></a>
+						<a href="deleteTrip/${trip.id}"><img alt="Delete"
+							src="<c:url value="/resources/images/delete.png"/>" /></a>
+					</c:if>
 				</c:otherwise>
 			</c:choose>
 			<table>
 				<c:forEach var="currentComment" items="${trip.comments}">
 					<tr>
-						<td><img alt="Like"
+						<td><img alt="User"
 							src="<c:url value="/resources/images/user.png"/>" /></td>
 						<td>${currentComment.user.username}</td>
-						<td>${currentComment.commentText}</td>
-						<td><img alt="Edit"
-							src="<c:url value="/resources/images/edit.png"/>" /></td>
-						<td><img alt="Delete"
-							src="<c:url value="/resources/images/delete.png"/>" /></td>
+						<c:choose>
+							<c:when test="${currentComment.editable eq true }">
+								<td>
+									<form:form commandName="comment" action="updateComment/${currentComment.id}" method="post">
+										<textarea name="commentText">${currentComment.commentText}</textarea>
+										<button type="submit">Update</button>
+									</form:form>
+								</td>
+							</c:when>
+							<c:otherwise>
+								<td>${currentComment.commentText}</td>
+								<c:if test="${currentComment.user.username eq currentUsername }">
+									<td>
+										<a href="editComment/${currentComment.id}">
+											<img alt="Edit"src="<c:url value="/resources/images/edit.png"/>" />
+									</a>
+									</td>
+									<td>
+										<a href="deleteComment/${currentComment.id}">
+											<img alt="Delete" src="<c:url value="/resources/images/delete.png"/>" />
+										</a>
+									</td>
+								</c:if>
+							</c:otherwise>
+						</c:choose>
 					</tr>
 				</c:forEach>
 			</table>

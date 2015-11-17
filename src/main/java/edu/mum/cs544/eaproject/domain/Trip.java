@@ -47,6 +47,10 @@ public class Trip {
 	
 	private boolean editable = false;
 	
+	@OneToMany(cascade=CascadeType.ALL)
+	@JoinColumn(name="tripId")
+	private List<Favorite> favorites = new ArrayList<Favorite>();
+	
 	public Trip() {
 		
 	}
@@ -147,6 +151,30 @@ public class Trip {
 	public void setEditable(boolean editable) {
 		this.editable = editable;
 	}
+
+	/**
+	 * @return the favorites
+	 */
+	public List<Favorite> getFavorites() {
+		return favorites;
+	}
+
+	/**
+	 * @param favorites the favorites to set
+	 */
+	public void setFavorites(List<Favorite> favorites) {
+		this.favorites = favorites;
+	}
 	
+	public void addFavorite(Favorite favor) {
+		this.favorites.add(favor);
+	}
 	
+	public void removeFavorite(Favorite favor) {
+		this.favorites.remove(favor);
+	}
+	
+	public boolean isFavorite() {
+		return false;
+	}
 }

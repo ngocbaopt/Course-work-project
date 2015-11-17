@@ -36,6 +36,8 @@ public class Comment {
 	@JoinColumn(name = "username")
 	private Users user;
 	
+	private boolean editable = false;
+	
 	public Comment() {
 		
 	}
@@ -101,6 +103,20 @@ public class Comment {
 	 */
 	public void setCommentText(String commentText) {
 		this.commentText = commentText;
+	}
+
+	/**
+	 * @return the editable
+	 */
+	public boolean isEditable() {
+		return editable;
+	}
+
+	/**
+	 * @param editable the editable to set
+	 */
+	public void setEditable(boolean editable) {
+		this.editable = editable;
 	}
 	
 	

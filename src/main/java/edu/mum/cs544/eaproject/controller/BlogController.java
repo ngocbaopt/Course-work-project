@@ -2,6 +2,7 @@ package edu.mum.cs544.eaproject.controller;
 
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import edu.mum.cs544.eaproject.domain.Comment;
+import edu.mum.cs544.eaproject.domain.Favorite;
 import edu.mum.cs544.eaproject.domain.Role;
 import edu.mum.cs544.eaproject.domain.Trip;
 import edu.mum.cs544.eaproject.domain.Users;
@@ -75,14 +77,10 @@ public class BlogController {
 	public String main(Model model) {
 		System.out.println("Add main page");
 		List<Trip> trips = tripService.getAllTrips();
-		for (Trip trip : trips) {
-			System.out.println("Trip comments = ");
-			for(Comment c: trip.getComments()) {
-				System.out.println(c.getCommentText());
-			}
-		}
 		model.addAttribute("trips", trips);
-		System.out.println("Trips = " + trips);
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String username = auth.getName(); // get logged in username
+		model.addAttribute("currentUsername", username);
 		return "main";
 	}
 
@@ -146,6 +144,47 @@ public class BlogController {
 	@RequestMapping(value="deleteTrip/{tripId}")
 	public String editTrip(@PathVariable int tripId) {
 		tripService.deleteTrip(tripId);
+		return "redirect:/main";
+	}
+	
+	@RequestMapping(value="editComment/{id}")
+	public String editComment(@PathVariable int id) {
+		Comment comment = tripService.getComment(id);
+		comment.setEditable(true);
+		tripService.updateComment(comment);
+		return "redirect:/main";
+	}
+	
+	@RequestMapping(value="updateComment/{id}")
+	public String updateComment(@PathVariable int id, @Valid Comment comment) {
+		Comment existingComment = tripService.getComment(id);
+		existingComment.setCommentText(comment.getCommentText());
+		existingComment.setEditable(false);
+		tripService.updateComment(existingComment);
+		return "redirect:/main";
+	}
+	
+	@RequestMapping(value="deleteComment/{id}") 
+	public String deleteComment(@PathVariable int id) {
+		tripService.deleteComment(id);
+		return "redirect:/main";
+	}
+	
+	@RequestMapping(value="addFavorite/{tripId}{username}")
+	public String addFavorite(@PathVariable int tripId, @PathVariable String username) {
+		Trip trip = tripService.getTrip(tripId);
+		Users user = userService.getUser(username);
+		Favorite favorite = tripService.getFavorite(tripId, username);
+		if (favorite == null) {
+			System.out.println("favorite is null");
+			Favorite favor = new Favorite(user);
+			trip.addFavorite(favor);
+			tripService.updateTrip(trip);
+		}
+		else {
+			System.out.println("delete favorite");
+			tripService.deleteFavorite(favorite.getId());
+		}
 		return "redirect:/main";
 	}
 

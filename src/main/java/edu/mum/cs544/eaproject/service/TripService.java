@@ -6,6 +6,7 @@ package edu.mum.cs544.eaproject.service;
 import java.util.List;
 
 import edu.mum.cs544.eaproject.domain.Comment;
+import edu.mum.cs544.eaproject.domain.Favorite;
 import edu.mum.cs544.eaproject.domain.Trip;
 
 public interface TripService {
@@ -22,7 +23,15 @@ public interface TripService {
 	
 	void saveComment(Comment comment);
 	
-	void deleteComment(Comment comment);
+	void deleteComment(int id);
 	
 	Comment getComment(int id);
+	
+	void updateComment(Comment comment);
+	
+	void addFavorite(Favorite favorite);
+	
+	void deleteFavorite(int id);
+	
+	Favorite getFavorite(int tripId, String username);
 }
