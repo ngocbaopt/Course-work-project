@@ -175,6 +175,17 @@ public class Trip {
 	}
 	
 	public boolean isFavorite() {
+		if (favorites.size() > 0)
+			return true;
+		return false;
+	}
+	
+	public boolean isLikedByUser(String currentUsername) {
+		for (Favorite favorite : favorites) {
+			if (favorite.getUser().getUsername().equals(currentUsername)) {
+				return true;
+			}
+		}
 		return false;
 	}
 }

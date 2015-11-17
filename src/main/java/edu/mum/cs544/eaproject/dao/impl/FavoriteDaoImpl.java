@@ -18,9 +18,25 @@ public class FavoriteDaoImpl extends BaseDaoImpl<Favorite> implements FavoriteDa
 	public Favorite getFavorite(int tripId, String username) {
 		// TODO Auto-generated method stub
 		Query query = sessionFactory.getCurrentSession().
-				createQuery("select distinct from Favorite where tripId = :tripId and username =:username");
+				createQuery("from Favorite where tripId = :tripId and username =:username");
+		query.setInteger("tripId", tripId);
+		query.setString("username", username);
 		List<Favorite> favorites = query.list();
-		return favorites.get(0);
+		if (favorites != null & favorites.size() > 0) {
+			return favorites.get(0); 
+		}
+		else
+			return null;
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<Favorite> getAllFavorites(int tripId) {
+		// TODO Auto-generated method stub
+		Query query = sessionFactory.getCurrentSession().createQuery("from Favorite where tripId = :tripId");
+		query.setInteger("tripId", tripId);
+		List<Favorite> favorites = query.list();
+		return favorites;
 	}
 
 }

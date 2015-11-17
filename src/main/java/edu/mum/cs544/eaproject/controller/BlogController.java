@@ -2,7 +2,6 @@ package edu.mum.cs544.eaproject.controller;
 
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,6 +80,12 @@ public class BlogController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String username = auth.getName(); // get logged in username
 		model.addAttribute("currentUsername", username);
+		for (Trip trip : trips) {
+			List<Favorite> favors = trip.getFavorites();
+			for (Favorite favor : favors) {
+				System.out.println("Favor = " + favor.getId() + " " + favor.getUser().getUsername());
+			}
+		}
 		return "main";
 	}
 
@@ -170,7 +175,7 @@ public class BlogController {
 		return "redirect:/main";
 	}
 	
-	@RequestMapping(value="addFavorite/{tripId}{username}")
+	@RequestMapping(value="addFavorite/{tripId}/{username}")
 	public String addFavorite(@PathVariable int tripId, @PathVariable String username) {
 		Trip trip = tripService.getTrip(tripId);
 		Users user = userService.getUser(username);

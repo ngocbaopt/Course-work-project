@@ -45,10 +45,28 @@
 					</form:form>
 				</c:when>
 				<c:otherwise>
-					<label>${trip.tripText }</label>
-					<a href="addFavorite/${trip.id}/${currentUsername}">
-						<img alt="Like" src="<c:url value="/resources/images/like.png"/>" />
-					</a>
+					<p>${trip.tripText }</p>			
+						<c:choose>
+							<c:when test="${trip.isFavorite()}">
+								<p>${trip.favorites.size()} people like this</p>
+								<c:choose>
+									<c:when test="${trip.isLikedByUser(currentUsername)}">
+										<a href="addFavorite/${trip.id}/${currentUsername}">
+											<img alt="Like" src="<c:url value="/resources/images/like filled.png"/>" />
+										</a>
+									</c:when>
+									<c:otherwise>
+										<a href="addFavorite/${trip.id}/${currentUsername}">
+											<img alt="Like" src="<c:url value="/resources/images/like.png"/>" />
+										</a>
+									</c:otherwise>
+								</c:choose>
+
+							</c:when>
+							<c:otherwise>
+								<img alt="Like" src="<c:url value="/resources/images/like.png"/>" />
+							</c:otherwise>
+						</c:choose>
 					<c:if test="${trip.user.username eq currentUsername }">
 						<a href="trip/${trip.id }"><img alt="Edit"
 							src="<c:url value="/resources/images/edit.png"/>" /></a>

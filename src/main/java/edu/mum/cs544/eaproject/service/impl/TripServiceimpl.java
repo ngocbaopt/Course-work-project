@@ -42,6 +42,8 @@ public class TripServiceimpl implements TripService {
 		for (Trip trip : trips) {
 			List<Comment> comments = commentDao.getCommentsByTrip(trip.getId());
 			trip.setComments(comments);
+			List<Favorite> favorites = favoriteDao.getAllFavorites(trip.getId());
+			trip.setFavorites(favorites);
 		}
 		return trips;
 	}

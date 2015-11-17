@@ -22,7 +22,7 @@ public class Favorite {
 	@GeneratedValue
 	private int id;
 	
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name="username")
 	private Users user;
 	

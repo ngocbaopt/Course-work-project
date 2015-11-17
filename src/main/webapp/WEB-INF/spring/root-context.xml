@@ -54,6 +54,7 @@
 				<value>edu.mum.cs544.eaproject.domain.Role</value>
 				<value>edu.mum.cs544.eaproject.domain.Trip</value>
 				<value>edu.mum.cs544.eaproject.domain.Comment</value>
+				<value>edu.mum.cs544.eaproject.domain.Favorite</value>
 			</list>
 		</property>
 	</bean>
