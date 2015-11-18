@@ -9,10 +9,10 @@
 					<form:errors path="*" cssClass="errorBlock" element="div"></form:errors>
 					<table>
 						<tr>
-							<td><textarea rows="4" cols="80" name="tripText"
+							<td><textarea rows="4" cols="60" name="tripText"
 									class="form-control"></textarea></td>
 							<td><input type="submit" class="btn btn-default" value="Add"></td>
-							<td><form:errors path="tripText" cssClass="error" /></td>
+						<%-- 	<td><p><form:errors path="tripText" cssClass="error" /></p></td> --%>
 						</tr>
 					</table>
 				</form:form>
@@ -28,11 +28,13 @@
 							<c:when test="${trip.editable eq true }">
 								<form:form commandName="trip" action="updateTrip/${trip.id}"
 									method="post">
+									<form:errors path="*" cssClass="errorBlock" element="div"></form:errors>
 									<table>
 										<tr>
 											<td><textarea name="tripText" class="form-control"
 													rows="4" cols="80">${trip.tripText }</textarea></td>
 											<td><button type="submit" class="btn btn-default">Update</button></td>
+											<td><form:errors path="tripText" cssClass="error" /></td>
 										</tr>
 									</table>
 								</form:form>

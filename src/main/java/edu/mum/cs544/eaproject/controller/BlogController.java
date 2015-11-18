@@ -53,13 +53,23 @@ public class BlogController {
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String addUser(@Valid Users user, BindingResult result) {
+	public String addUser(@Valid Users user, BindingResult result, Model model) {
 		String view = "redirect:/login";
 		if (!result.hasErrors()) {
 			Users encodedUser = Utils.encodePassword(user);
 			Role role = userService.getRole("ROLE_USER");
 			role.grantUser(encodedUser);
-			userService.saveRole(role);
+			try {
+				Users checkUser = userService.getUser(user.getUsername());
+				if (checkUser != null) {
+					model.addAttribute("error", "Username has already existed");
+					return "register";
+				}
+				userService.saveRole(role);
+			} catch (Exception e) {
+				model.addAttribute("error", e.getMessage());
+				view = "register";
+			}
 		} else {
 			view = "register";
 		}
@@ -80,12 +90,6 @@ public class BlogController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String username = auth.getName(); // get logged in username
 		model.addAttribute("currentUsername", username);
-		for (Trip trip : trips) {
-			List<Favorite> favors = trip.getFavorites();
-			for (Favorite favor : favors) {
-				System.out.println("Favor = " + favor.getId() + " " + favor.getUser().getUsername());
-			}
-		}
 		return "main";
 	}
 
@@ -105,6 +109,8 @@ public class BlogController {
 			Users user = userService.getUser(username);
 			trip.setUser(user);
 			tripService.saveTrip(trip);
+		} else {
+			return "main";
 		}
 		return view;
 	}
@@ -124,43 +130,50 @@ public class BlogController {
 			System.out.println("Comment = " + comment.getCommentText());
 			trip.addComment(comment);
 			tripService.updateTrip(trip);
+		} else {
+			view = "main";
 		}
 		return view;
 	}
-	
-	@RequestMapping(value="trip/{tripId}")
+
+	@RequestMapping(value = "trip/{tripId}")
 	public String editTrip(@PathVariable int tripId, Model model) {
 		Trip trip = tripService.getTrip(tripId);
 		trip.setEditable(true);
 		tripService.updateTrip(trip);
 		return "redirect:/main";
 	}
-	
-	@RequestMapping(value="updateTrip/{id}")
-	public String updateTrip(@PathVariable int id, @Valid Trip trip, Model model) {
-		model.addAttribute("editTrip", false);
-		Trip existingTrip = tripService.getTrip(id);
-		existingTrip.setTripText(trip.getTripText());
-		existingTrip.setEditable(false);
-		tripService.updateTrip(existingTrip);
-		return "redirect:/main";
+
+	@RequestMapping(value = "updateTrip/{id}")
+	public String updateTrip(@PathVariable int id, @Valid Trip trip, Model model, BindingResult result) {
+		if (!result.hasErrors()) {
+			Trip existingTrip = tripService.getTrip(id);
+			existingTrip.setTripText(trip.getTripText());
+			existingTrip.setEditable(false);
+			tripService.updateTrip(existingTrip);
+			return "redirect:/main";
+		}
+		else {
+			return "main";
+		}
+		
 	}
-	
-	@RequestMapping(value="deleteTrip/{tripId}")
+
+	@RequestMapping(value = "deleteTrip/{tripId}")
 	public String editTrip(@PathVariable int tripId) {
 		tripService.deleteTrip(tripId);
 		return "redirect:/main";
 	}
-	
-	@RequestMapping(value="editComment/{id}")
+
+	@RequestMapping(value = "editComment/{id}")
 	public String editComment(@PathVariable int id) {
 		Comment comment = tripService.getComment(id);
 		comment.setEditable(true);
 		tripService.updateComment(comment);
 		return "redirect:/main";
 	}
-	
-	@RequestMapping(value="updateComment/{id}")
+
+	@RequestMapping(value = "updateComment/{id}")
 	public String updateComment(@PathVariable int id, @Valid Comment comment) {
 		Comment existingComment = tripService.getComment(id);
 		existingComment.setCommentText(comment.getCommentText());
@@ -168,14 +181,14 @@ public class BlogController {
 		tripService.updateComment(existingComment);
 		return "redirect:/main";
 	}
-	
-	@RequestMapping(value="deleteComment/{id}") 
+
+	@RequestMapping(value = "deleteComment/{id}")
 	public String deleteComment(@PathVariable int id) {
 		tripService.deleteComment(id);
 		return "redirect:/main";
 	}
-	
-	@RequestMapping(value="addFavorite/{tripId}/{username}")
+
+	@RequestMapping(value = "addFavorite/{tripId}/{username}")
 	public String addFavorite(@PathVariable int tripId, @PathVariable String username) {
 		Trip trip = tripService.getTrip(tripId);
 		Users user = userService.getUser(username);
@@ -185,8 +198,7 @@ public class BlogController {
 			Favorite favor = new Favorite(user);
 			trip.addFavorite(favor);
 			tripService.updateTrip(trip);
-		}
-		else {
+		} else {
 			System.out.println("delete favorite");
 			tripService.deleteFavorite(favorite.getId());
 		}
