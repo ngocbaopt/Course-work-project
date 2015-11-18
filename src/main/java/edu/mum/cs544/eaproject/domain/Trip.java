@@ -14,8 +14,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  * 
@@ -31,7 +33,7 @@ public class Trip {
 	private int id;
 	
 	@Lob
-	@NotBlank
+	@NotEmpty
 	private String tripText;
 	
 	@Temporal(value = TemporalType.TIMESTAMP)

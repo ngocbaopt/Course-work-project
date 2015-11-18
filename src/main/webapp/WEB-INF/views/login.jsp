@@ -1,25 +1,32 @@
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE HTML>
-
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Login</title>
-    </head>
-    <body>
-        <h1>Please log in!</h1>
-        <c:if test="${error eq true}">
-            <p>${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}</p>
-        </c:if>
-        <form method="post" action="<c:url value='j_spring_security_check' />">
-            User: <input name="j_username" value='<c:if test="${not empty param.login_error}"><c:out value="${SPRING_SECURITY_LAST_USERNAME}"/></c:if>'/> <br />
-            Pass: <input type="password" name='j_password' /> <br />
-            Remember me: <input type="checkbox" name="_spring_security_remember_me" /> <br />
-            <input type="hidden" name="<c:out value="${_csrf.parameterName}"/>" value="<c:out value="${_csrf.token}"/>"/>
-            <input type="submit" />
-        </form>
-        
-        <a href="register">Register new account</a>
-    </body>
-</html>
+<%@ include file="header.jsp"%>
+<div class="container">
+	<div class="page-content">
+		<div class="row">
+			<div class="col-sm-3"></div>
+			<div class="col-sm-6">
+				<h3>Please log in!</h3>
+				<c:if test="${error eq true}">
+					<p>${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}</p>
+				</c:if>
+				<form method="post"
+					action="<c:url value='j_spring_security_check' />"
+					class="form-signin">
+					<label for="j_username">Username</label> <input
+						class="form-control" name="j_username"
+						value='<c:if test="${not empty param.login_error}">
+										<c:out value="${SPRING_SECURITY_LAST_USERNAME}"/>
+									</c:if>' />
+					<label for="j_password">Password</label> <input type="password"
+						name='j_password' class="form-control" /> <input type="hidden"
+						name="<c:out value="${_csrf.parameterName}"/>"
+						value="<c:out value="${_csrf.token}"/>" />
+						 <div class="checkbox">
+      						<label for="_spring_security_remember_me"><input type="checkbox" name="_spring_security_remember_me">Remember me</label>
+    					</div>
+					<input type="submit" class="button" />
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<%@ include file="footer.jsp"%>

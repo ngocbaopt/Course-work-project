@@ -13,6 +13,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  * @author baopham
@@ -26,7 +27,7 @@ public class Comment {
 	private int id;
 	
 	@Lob
-	@NotBlank
+	@NotEmpty
 	private String commentText;
 	
 	@Temporal(TemporalType.TIMESTAMP)

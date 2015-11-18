@@ -3,7 +3,6 @@
  */
 package edu.mum.cs544.eaproject.domain;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
