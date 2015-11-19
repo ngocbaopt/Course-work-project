@@ -16,7 +16,7 @@
 						class="form-control" name="j_username"
 						value='<c:if test="${not empty param.login_error}">
 										<c:out value="${SPRING_SECURITY_LAST_USERNAME}"/>
-									</c:if>' />
+									</c:if>' autofocus="autofocus"/>
 					<label for="j_password">Password</label> <input type="password"
 						name='j_password' class="form-control" /> <input type="hidden"
 						name="<c:out value="${_csrf.parameterName}"/>"

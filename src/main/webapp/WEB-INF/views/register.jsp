@@ -11,7 +11,7 @@
 				<form:form commandName="users" action="register" method="post">
 					<form:errors path="*" cssClass="errorBlock" element="div"></form:errors>
 					<label>User name</label>
-					<input type="text" name="username" class="form-control" />
+					<input type="text" name="username" class="form-control" autofocus="autofocus" />
 					<form:errors path="username" cssClass="error" />
 
 					<label>Password</label>

@@ -6,13 +6,13 @@
 			<div class="col-sm-6">
 				<form:form commandName="trip" action="addTrip" method="post"
 					class="form-inline">
-					<form:errors path="*" cssClass="errorBlock" element="div"></form:errors>
+					<form:errors path="tripText" cssClass="errorBlock" element="div"></form:errors>
 					<table>
 						<tr>
 							<td><textarea rows="4" cols="60" name="tripText"
-									class="form-control"></textarea></td>
+									class="form-control" autofocus="autofocus"></textarea></td>
 							<td><input type="submit" class="btn btn-default" value="Add"></td>
-						<%-- 	<td><p><form:errors path="tripText" cssClass="error" /></p></td> --%>
+							<%-- 	<td><p><form:errors path="tripText" cssClass="error" /></p></td> --%>
 						</tr>
 					</table>
 				</form:form>
@@ -34,7 +34,9 @@
 											<td><textarea name="tripText" class="form-control"
 													rows="4" cols="80">${trip.tripText }</textarea></td>
 											<td><button type="submit" class="btn btn-default">Update</button></td>
-											<td><form:errors path="tripText" cssClass="error" /></td>
+											<c:if test="${updateTrip eq true }">
+												<td><form:errors path="tripText" cssClass="error" /></td>
+											</c:if>
 										</tr>
 									</table>
 								</form:form>
@@ -92,6 +94,7 @@
 										<c:when test="${currentComment.editable eq true }">
 											<form:form commandName="comment"
 												action="updateComment/${currentComment.id}" method="post">
+												<form:errors path="*" cssClass="errorBlock" element="div"></form:errors>
 												<table>
 													<tr>
 														<td><textarea name="commentText" class="form-control">${currentComment.commentText}</textarea></td>

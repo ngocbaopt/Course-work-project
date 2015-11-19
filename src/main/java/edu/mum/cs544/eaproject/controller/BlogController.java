@@ -101,7 +101,7 @@ public class BlogController {
 	}
 
 	@RequestMapping(value = "addTrip", method = RequestMethod.POST)
-	public String addTrip(@Valid Trip trip, BindingResult result) {
+	public String addTrip(@Valid Trip trip, BindingResult result, Model model) {
 		String view = "redirect:/main";
 		if (!result.hasErrors()) {
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -110,6 +110,7 @@ public class BlogController {
 			trip.setUser(user);
 			tripService.saveTrip(trip);
 		} else {
+			model.addAttribute("addTrip", true);
 			return "main";
 		}
 		return view;
@@ -144,19 +145,19 @@ public class BlogController {
 		return "redirect:/main";
 	}
 
-	@RequestMapping(value = "updateTrip/{id}")
-	public String updateTrip(@PathVariable int id, @Valid Trip trip, Model model, BindingResult result) {
+	@RequestMapping(value = "updateTrip/{id}", method=RequestMethod.POST)
+	public String updateTrip(@PathVariable int id, @Valid Trip trip, BindingResult result, Model model) {
 		if (!result.hasErrors()) {
 			Trip existingTrip = tripService.getTrip(id);
 			existingTrip.setTripText(trip.getTripText());
 			existingTrip.setEditable(false);
 			tripService.updateTrip(existingTrip);
 			return "redirect:/main";
-		}
-		else {
+		} else {
+			model.addAttribute("updateTrip", true);
 			return "main";
 		}
-		
+
 	}
 
 	@RequestMapping(value = "deleteTrip/{tripId}")
@@ -173,13 +174,18 @@ public class BlogController {
 		return "redirect:/main";
 	}
 
-	@RequestMapping(value = "updateComment/{id}")
-	public String updateComment(@PathVariable int id, @Valid Comment comment) {
-		Comment existingComment = tripService.getComment(id);
-		existingComment.setCommentText(comment.getCommentText());
-		existingComment.setEditable(false);
-		tripService.updateComment(existingComment);
-		return "redirect:/main";
+	@RequestMapping(value = "updateComment/{id}", method=RequestMethod.POST)
+	public String updateComment(@PathVariable int id, @Valid Comment comment, BindingResult result) {
+		if (!result.hasErrors()) {
+			Comment existingComment = tripService.getComment(id);
+			existingComment.setCommentText(comment.getCommentText());
+			existingComment.setEditable(false);
+			tripService.updateComment(existingComment);
+			return "redirect:/main";
+		}
+		else {
+			return "main";
+		}
 	}
 
 	@RequestMapping(value = "deleteComment/{id}")

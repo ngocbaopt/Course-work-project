@@ -13,15 +13,16 @@
 	http://www.springframework.org/schema/security/spring-security-3.2.xsd">
 
 	<sec:http pattern="/login" security="none" />
-<!-- 	<sec:http pattern="/loginfailed" security="none" /> 
-	<sec:http pattern="/register" security="none" />   -->
 	<!-- Root Context: defines shared resources visible to all other web components -->
 
 	<bean id="webexpressionHandler"
 		class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler" />
 
 	<sec:http use-expressions="true">
-	<!-- 	<sec:intercept-url pattern="/**" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" /> -->
+<!-- 		<sec:intercept-url pattern="/login" access="permitAll" /> 
+	 	<sec:intercept-url pattern="/loginfailed" access="permitAll" /> 
+		<sec:intercept-url pattern="/register" access="permitAll" />  
+	 	<sec:intercept-url pattern="/**" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')" /> -->
 		<sec:form-login login-page="/login"
 			authentication-failure-url="/loginfailed" default-target-url="/main" />
 		<sec:logout logout-success-url="/login" />
