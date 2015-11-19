@@ -184,7 +184,7 @@ public class Trip {
 	
 	public boolean isLikedByUser(String currentUsername) {
 		for (Favorite favorite : favorites) {
-			if (favorite.getUser().getUsername().equals(currentUsername)) {
+			if (favorite != null && favorite.getUser() != null && favorite.getUser().getUsername().equals(currentUsername)) {
 				return true;
 			}
 		}
